@@ -1,8 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>wellcome</title>
+    <meta charset="ISO-8859-1">
+    <title>List of candidates</title>
+
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+          crossorigin="anonymous">
+
 </head>
 <body>
 <div align="center">
@@ -11,6 +17,28 @@
     <div>Do you just want to vote</div>
     <a href="/vote">click here then</a>
 </div>
+<table border="1" class = "table table-dark table-striped">
+    <thead>
+    <tr>
+        <th>
+            <a>ID</a>
+        </th>
+        <th>
+            <a>Name</a>
+        </th>
+        <th>
+            <a>Votes</a>
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="Candidate : ${listCandidates}">
+        <td th:text="${Candidate.id}"></td>
+        <td th:text="${Candidate.username}"></td>
+        <td th:text="${Candidate.votes}"></td>
+    </tr>
+    </tbody>
+</table>
 
 
 </body>
