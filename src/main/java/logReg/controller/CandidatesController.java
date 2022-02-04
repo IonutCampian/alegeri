@@ -21,6 +21,9 @@ public class CandidatesController {
         Candidates newCandidate = new Candidates();
         newCandidate.setUsername(candidate.getUsername());
         newCandidate.setVotes(0);
+        if(candidatesRepository.findByUsername(newCandidate.getUsername()) != null){
+            return "redirect:/vote";
+        }
         candidatesRepository.save(newCandidate);
         return "redirect:/vote";
     }
@@ -35,6 +38,7 @@ public class CandidatesController {
         model.addAttribute("listCandidates", candidatesRepository.findAll());
         return "candidates";
     }
+
     @GetMapping("/Addvote/{id}")
     public String AddVotes(@PathVariable(value = "id") long id, Model model) {
         model.addAttribute("Candidates", new Candidates());
@@ -42,5 +46,10 @@ public class CandidatesController {
         addVoteToCandidate.setVotes(addVoteToCandidate.getVotes()+1);
         candidatesRepository.saveAndFlush(addVoteToCandidate);
         return "redirect:/vote";
+    }
+    @RequestMapping("/backToHome")
+    public String backToWellcome(Model model) {
+        model.addAttribute("listCandidates", candidatesRepository.findAll());
+        return "wellcome";
     }
 }
