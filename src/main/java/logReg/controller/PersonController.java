@@ -17,6 +17,8 @@ public class PersonController {
 
     @Autowired
     private PersonRepository personRepository;
+    @Autowired
+    private CandidatesRepository candidatesRepository;
 
 
     @GetMapping("")
@@ -47,8 +49,9 @@ public class PersonController {
     }
 
     @RequestMapping("/loginPerson")
-    public String checkForUser(@ModelAttribute Person person) {
+    public String checkForUser(@ModelAttribute Person person, Model model) {
         if ((personRepository.findByUsernameAndPassword(person.getUsername(), person.getPassword())) != null) {
+            model.addAttribute("listCandidates", candidatesRepository.findAll());
             return "wellcome";
         } else {
             return "redirect:/login_page";
